@@ -4,32 +4,54 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody2D rigidBoddy2D;
-    
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
 
+    private Animator animator;
+    private Rigidbody2D rigidBoddy2D;
     private float xInput;
 
-    // Start is called before the first frame update
     void Start()
     {
         rigidBoddy2D = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
     }
 
-    // Update is called once per frame
+  
     void Update()
+    {
+        HandleInput();
+        HandleAnimation();
+    }
+
+    private void HandleInput()
     {
         if (Input.GetButtonDown("Jump"))
         {
-            Debug.Log("Jump");
+            HandleJump();
         }
+        //xMovement control
         xInput = Input.GetAxisRaw("Horizontal");
-        rigidBoddy2D.velocity = new Vector2(xInput * walkSpeed, rigidBoddy2D.velocity.y);
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            rigidBoddy2D.velocity = new Vector2(rigidBoddy2D.velocity.x, jumpForce);
-        }
+        HandleMovement();
     }
+
+    private void HandleJump()
+    {
+        rigidBoddy2D.velocity = new Vector2(rigidBoddy2D.velocity.x, jumpForce);
+    }
+
+    private void HandleMovement()
+    {
+        
+        rigidBoddy2D.velocity = new Vector2(xInput * walkSpeed, rigidBoddy2D.velocity.y);
+        
+    }
+
+    private void HandleAnimation()
+    {
+        bool isMoving = rigidBoddy2D.velocity.x != 0;
+        animator.SetBool("isMoving", isMoving);
+    }
+
+
 }
