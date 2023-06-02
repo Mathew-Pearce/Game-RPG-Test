@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Rigidbody2D rigidBoddy2D;
-    private float xInput;
-    public float walkSpeed = 5f;
-    public float jumpForce = 5f;
+    private Rigidbody2D rigidBoddy2D;
     
+    [SerializeField] float walkSpeed = 5f;
+    [SerializeField] float jumpForce = 5f;
+
+    private float xInput;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rigidBoddy2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
