@@ -29,9 +29,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleInput();
+        CheckIfGrounded();
         HandleAnimation();
-
-        
     }
 
     private void HandleInput()
@@ -46,7 +45,6 @@ public class Player : MonoBehaviour
 
     private void HandleJump()
     {
-        CheckIfGrounded();
         if (isGrounded)
         {
             rigidBoddy2D.velocity = new Vector2(rigidBoddy2D.velocity.x, jumpForce);
@@ -65,6 +63,8 @@ public class Player : MonoBehaviour
     {
         bool isMoving = rigidBoddy2D.velocity.x != 0;
         animator.SetBool("isMoving", isMoving);
+        animator.SetFloat("yVelocity", rigidBoddy2D.velocity.y);
+        animator.SetBool("isGrounded", isGrounded);
     }
 
     private void FlipSprite()
