@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Player control Paramators")]
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
+
+    [Header("Ground collision info")]
+    [SerializeField] float groundCheckDistance = 0.2f;
+    [SerializeField] LayerMask groundMask;
 
     private Animator animator;
     private Rigidbody2D rigidBoddy2D;
     private float xInput;
     private int faceDir = 1;
     private bool isFacingRight = true;
-
+    private bool isGrounded;
 
     void Start()
     {
@@ -25,6 +30,7 @@ public class Player : MonoBehaviour
     {
         HandleInput();
         HandleAnimation();
+
         
     }
 
@@ -40,7 +46,12 @@ public class Player : MonoBehaviour
 
     private void HandleJump()
     {
-        rigidBoddy2D.velocity = new Vector2(rigidBoddy2D.velocity.x, jumpForce);
+        CheckIfGrounded();
+        if (isGrounded)
+        {
+            rigidBoddy2D.velocity = new Vector2(rigidBoddy2D.velocity.x, jumpForce);
+        }
+
     }
 
     private void HandleMovement()
@@ -69,5 +80,16 @@ public class Player : MonoBehaviour
             FlipSprite(); 
         else if (rigidBoddy2D.velocity.x < 0 && isFacingRight)
             FlipSprite();
+    }
+
+    //Maybe make this selected?
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckDistance));
+    }
+
+    private void CheckIfGrounded()
+    {
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundMask);
     }
 }

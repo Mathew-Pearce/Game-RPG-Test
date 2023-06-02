@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 204950663}
   - component: {fileID: 204950662}
   - component: {fileID: 204950661}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Platform (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 843719254}
   - component: {fileID: 843719253}
   - component: {fileID: 843719255}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,7 +657,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 5
   jumpForce: 5
-  isMoving: 0
+  groundCheckDistance: 1.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!70 &2073434555
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
