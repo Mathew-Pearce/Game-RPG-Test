@@ -8,6 +8,11 @@ public class Player : MonoBehaviour
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
 
+    [Header("Dash Params")]
+    [SerializeField] private float dashSpeed;
+    [SerializeField] float dashDuration;
+    [SerializeField] float dashTimer;
+
     [Header("Ground collision info")]
     [SerializeField] float groundCheckDistance = 0.2f;
     [SerializeField] LayerMask groundMask;
@@ -30,6 +35,13 @@ public class Player : MonoBehaviour
     {
         HandleInput();
         CheckIfGrounded();
+
+        dashTimer -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            dashTimer = dashDuration;
+        }
         HandleAnimation();
     }
 
@@ -55,7 +67,17 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         xInput = Input.GetAxisRaw("Horizontal");
-        rigidBoddy2D.velocity = new Vector2(xInput * walkSpeed, rigidBoddy2D.velocity.y);
+
+        if(dashTimer > 0)
+        {
+            rigidBoddy2D.velocity = new Vector2(xInput * dashSpeed, 0);
+        }
+        else
+        {
+            rigidBoddy2D.velocity = new Vector2(xInput * walkSpeed, rigidBoddy2D.velocity.y);
+        }
+
+        
         FlipController();
     }
 
@@ -65,6 +87,7 @@ public class Player : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
         animator.SetFloat("yVelocity", rigidBoddy2D.velocity.y);
         animator.SetBool("isGrounded", isGrounded);
+        animator.SetBool("Dashing", dashTimer > 0);
     }
 
     private void FlipSprite()

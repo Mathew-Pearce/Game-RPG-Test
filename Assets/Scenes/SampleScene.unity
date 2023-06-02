@@ -352,12 +352,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204950660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.42, y: -0.5003, z: 0}
+  m_LocalPosition: {x: 13.6, y: -4.96, z: 0}
   m_LocalScale: {x: 14.225, y: 6.3394, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -420,7 +420,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 8.19
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -529,8 +529,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843719252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.17, z: 0}
-  m_LocalScale: {x: 14.225, y: 1, z: 1}
+  m_LocalPosition: {x: -3.8728, y: -7.6297, z: 0}
+  m_LocalScale: {x: 21.970512, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -615,7 +615,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 4.14
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -635,13 +635,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073434549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.35, y: 0.31, z: 0}
+  m_LocalPosition: {x: -13.3, y: -5.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 83541369}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2073434554
 MonoBehaviour:
@@ -656,7 +656,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 6
-  jumpForce: 7
+  jumpForce: 12.89
+  dashSpeed: 15
+  dashDuration: 0.4
+  dashTimer: 0
   groundCheckDistance: 1.4
   groundMask:
     serializedVersion: 2
@@ -670,7 +673,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 2073434549}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f9a67ff81d653b345a89934f2bbf24b3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
