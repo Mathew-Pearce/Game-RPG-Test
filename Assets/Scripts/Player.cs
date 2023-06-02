@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rigidBoddy2D;
     private float xInput;
+    private int faceDir = 1;
+    private bool isFacingRight = true;
+
 
     void Start()
     {
@@ -22,6 +25,7 @@ public class Player : MonoBehaviour
     {
         HandleInput();
         HandleAnimation();
+        
     }
 
     private void HandleInput()
@@ -30,8 +34,7 @@ public class Player : MonoBehaviour
         {
             HandleJump();
         }
-        //xMovement control
-        xInput = Input.GetAxisRaw("Horizontal");
+        
         HandleMovement();
     }
 
@@ -42,9 +45,9 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        
+        xInput = Input.GetAxisRaw("Horizontal");
         rigidBoddy2D.velocity = new Vector2(xInput * walkSpeed, rigidBoddy2D.velocity.y);
-        
+        FlipController();
     }
 
     private void HandleAnimation()
@@ -53,5 +56,18 @@ public class Player : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
     }
 
+    private void FlipSprite()
+    {
+        faceDir = faceDir * -1;
+        isFacingRight = !isFacingRight;
+        transform.Rotate(0, 180, 0);
+    }
 
+    private void FlipController()
+    {
+        if(rigidBoddy2D.velocity.x > 0 && !isFacingRight) 
+            FlipSprite(); 
+        else if (rigidBoddy2D.velocity.x < 0 && isFacingRight)
+            FlipSprite();
+    }
 }
