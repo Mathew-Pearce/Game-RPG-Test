@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("Player control Paramators")]
+    [Header("Player control Params")]
     [SerializeField] float walkSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
 
     [Header("Dash Params")]
     [SerializeField] private float dashSpeed;
     [SerializeField] float dashDuration;
-    [SerializeField] float dashTimer;
+    [SerializeField] float dashCooldown;
+   
+    private float dashTimer;
+    private float dashCooldownTimer;
 
     [Header("Ground collision info")]
     [SerializeField] float groundCheckDistance = 0.2f;
@@ -35,15 +38,10 @@ public class Player : MonoBehaviour
     {
         HandleInput();
         CheckIfGrounded();
-
-        dashTimer -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            dashTimer = dashDuration;
-        }
+        HandleTimers();
         HandleAnimation();
     }
+
 
     private void HandleInput()
     {
@@ -51,8 +49,23 @@ public class Player : MonoBehaviour
         {
             HandleJump();
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            DashAbility();
+        }
+
         HandleMovement();
+    }
+
+    private void DashAbility()
+    {
+        if(dashCooldownTimer < 0)
+        {
+            dashCooldownTimer = dashCooldown;
+            dashTimer = dashDuration;
+        }
+        
     }
 
     private void HandleJump()
@@ -105,8 +118,14 @@ public class Player : MonoBehaviour
             FlipSprite();
     }
 
+    private void HandleTimers()
+    {
+        dashTimer -= Time.deltaTime;
+        dashCooldownTimer -= Time.deltaTime;
+    }
+
     //Maybe make this selected?
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckDistance));
     }
