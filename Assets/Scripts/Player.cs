@@ -16,7 +16,11 @@ public class Player : MonoBehaviour
     private float dashTimer;
     private float dashCooldownTimer;
 
-    [Header("Ground collision info")]
+    [Header("Attack Params")]
+    [SerializeField] private bool isAttacking;
+    [SerializeField] private int comboCounter;
+
+    [Header("Ground collision Params")]
     [SerializeField] float groundCheckDistance = 0.2f;
     [SerializeField] LayerMask groundMask;
 
@@ -55,7 +59,13 @@ public class Player : MonoBehaviour
             DashAbility();
         }
 
+        xInput = Input.GetAxisRaw("Horizontal");
         HandleMovement();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            isAttacking = true;
+        }
     }
 
     private void DashAbility()
@@ -79,7 +89,7 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        xInput = Input.GetAxisRaw("Horizontal");
+        
 
         if(dashTimer > 0)
         {
@@ -101,6 +111,9 @@ public class Player : MonoBehaviour
         animator.SetFloat("yVelocity", rigidBoddy2D.velocity.y);
         animator.SetBool("isGrounded", isGrounded);
         animator.SetBool("Dashing", dashTimer > 0);
+        animator.SetBool("isAttacking", isAttacking);
+        animator.SetInteger("ComboCounter", comboCounter);
+
     }
 
     private void FlipSprite()
@@ -124,7 +137,6 @@ public class Player : MonoBehaviour
         dashCooldownTimer -= Time.deltaTime;
     }
 
-    //Maybe make this selected?
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckDistance));
@@ -133,5 +145,10 @@ public class Player : MonoBehaviour
     private void CheckIfGrounded()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundMask);
+    }
+
+    public void AttackOver()
+    {
+        isAttacking = false;
     }
 }
