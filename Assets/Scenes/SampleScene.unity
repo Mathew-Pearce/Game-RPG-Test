@@ -365,8 +365,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204950660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.1729, y: -4.96, z: 0}
-  m_LocalScale: {x: 4.3514276, y: 6.3394, z: 1}
+  m_LocalPosition: {x: 2.1729, y: -6.4928, z: 0}
+  m_LocalScale: {x: 4.3514276, y: 3.273666, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -573,8 +573,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843719252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.8463, y: -7.6297, z: 0}
-  m_LocalScale: {x: 43.495907, y: 1, z: 1}
+  m_LocalPosition: {x: 0.414, y: -7.6297, z: 0}
+  m_LocalScale: {x: 30.123163, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -793,7 +793,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  isAttacking: 0
   moveSpeed: 2
+  playerDetectionDistance: 2.64
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!70 &1076863658
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1032,7 +1037,7 @@ GameObject:
   - component: {fileID: 2073434550}
   - component: {fileID: 2073434555}
   - component: {fileID: 2073434554}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1053,8 +1058,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 4.14
+  m_AngularDrag: 0.5
+  m_GravityScale: 3.96
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1062,9 +1067,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!4 &2073434552
 Transform:
@@ -1103,7 +1108,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   walkSpeed: 6
-  jumpForce: 12.89
+  jumpForce: 18.9
   dashSpeed: 25
   dashDuration: 0.25
   dashCooldown: 1.4

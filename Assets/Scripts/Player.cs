@@ -34,7 +34,7 @@ public class Player : Entity
 
         HandleInput();
         HandleMovement();
-        CheckIfGrounded();
+        CollisionCheck();
         HandleTimers();
         HandleAnimation();
     }
@@ -146,5 +146,10 @@ public class Player : Entity
        
         if (comboCounter > 2) 
         comboCounter = 0;
+    }
+
+    protected override void CollisionCheck()
+    {
+        base.CollisionCheck();
     }
 }
