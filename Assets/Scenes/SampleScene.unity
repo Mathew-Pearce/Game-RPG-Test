@@ -673,8 +673,8 @@ MonoBehaviour:
   dashSpeed: 25
   dashDuration: 0.25
   dashCooldown: 1.4
-  isAttacking: 0
-  comboCounter: 0
+  comboTimeWindow: 0
+  comboTime: 0.69
   groundCheckDistance: 1.4
   groundMask:
     serializedVersion: 2

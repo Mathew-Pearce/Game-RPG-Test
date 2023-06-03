@@ -17,8 +17,12 @@ public class Player : MonoBehaviour
     private float dashCooldownTimer;
 
     [Header("Attack Params")]
-    [SerializeField] private bool isAttacking;
-    [SerializeField] private int comboCounter;
+    [SerializeField] float comboTimeWindow;
+    [SerializeField] float comboTime = 0.3f;
+    private bool isAttacking;
+    private int comboCounter;
+  
+
 
     [Header("Ground collision Params")]
     [SerializeField] float groundCheckDistance = 0.2f;
@@ -41,6 +45,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleInput();
+        HandleMovement();
         CheckIfGrounded();
         HandleTimers();
         HandleAnimation();
@@ -60,17 +65,18 @@ public class Player : MonoBehaviour
         }
 
         xInput = Input.GetAxisRaw("Horizontal");
-        HandleMovement();
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            isAttacking = true;
+            StartAttack();
         }
     }
 
+
+
     private void DashAbility()
     {
-        if(dashCooldownTimer < 0)
+        if(dashCooldownTimer < 0 && !isAttacking)
         {
             dashCooldownTimer = dashCooldown;
             dashTimer = dashDuration;
@@ -89,11 +95,13 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        
-
-        if(dashTimer > 0)
+        if (isAttacking)
         {
-            rigidBoddy2D.velocity = new Vector2(xInput * dashSpeed, 0);
+            rigidBoddy2D.velocity = new Vector2(0, 0);
+        }
+        else if(dashTimer > 0)
+        {
+            rigidBoddy2D.velocity = new Vector2(faceDir * dashSpeed, 0);
         }
         else
         {
@@ -135,6 +143,7 @@ public class Player : MonoBehaviour
     {
         dashTimer -= Time.deltaTime;
         dashCooldownTimer -= Time.deltaTime;
+        comboTimeWindow -= Time.deltaTime;
     }
 
     private void OnDrawGizmosSelected()
@@ -147,8 +156,23 @@ public class Player : MonoBehaviour
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundMask);
     }
 
+    private void StartAttack()
+    {
+        if (!isGrounded) return;
+        if (comboTimeWindow < 0)
+            comboCounter = 0;
+
+        isAttacking = true;
+        comboTimeWindow = comboTime;
+    }
+
     public void AttackOver()
     {
         isAttacking = false;
+        
+        comboCounter++;
+       
+        if (comboCounter > 2) 
+        comboCounter = 0;
     }
 }
